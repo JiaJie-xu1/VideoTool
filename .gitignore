@@ -1,0 +1,17 @@
+.idea/
+.idea/*.xml
+*.iml
+.gradle
+/local.properties
+.idea
+.DS_Store
+/build
+/captures
+/app/objectbox-models
+.externalNativeBuild
+
+app/objectbox-models/
+
+push/build/
+
+switchbotton/build/
