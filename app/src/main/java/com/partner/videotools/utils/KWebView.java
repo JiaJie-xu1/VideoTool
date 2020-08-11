@@ -19,14 +19,6 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-/**
- * ================================================
- * 作    者：Herve、Li
- * 创建日期：2020/6/28
- * 描    述：网页加载
- * 修订历史：
- * ================================================
- */
 public class KWebView extends WebView {
 
     private HtmlCallback htmlCallback;
@@ -105,14 +97,12 @@ public class KWebView extends WebView {
         this.htmlCallback = htmlCallback;
     }
 
-    interface HtmlCallback {
+    public interface HtmlCallback {
         void onHtmlGet(String html);
     }
 
     /**
      * 逻辑处理
-     *
-     * @author linzewu
      */
     class InJavaScriptLocalObj {
 

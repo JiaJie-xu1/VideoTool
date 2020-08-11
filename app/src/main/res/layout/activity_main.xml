@@ -10,8 +10,7 @@
     <com.partner.videotools.utils.KWebView
         android:id="@+id/webView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:layout_height="1dp"
         />
 
     <EditText
@@ -21,6 +20,14 @@
         android:hint="输入抖音分享链接"
         android:textIsSelectable="true" />
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="button"
+        android:text="开始解析"
+        />
+
     <TextView
         android:id="@+id/tvResult"
         android:layout_width="wrap_content"
@@ -29,5 +36,6 @@
         android:onClick="onResultClick"
         android:text="解析结果显示区"
         />
+
 
 </LinearLayout>

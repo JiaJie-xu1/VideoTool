@@ -5,8 +5,12 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.blankj.utilcode.util.ToastUtils
+import com.partner.videotools.utils.KWebView
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -27,7 +31,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        webView.setHtmlCallback(this::parseHtml)
+        webView.setHtmlCallback{
+            parseHtml(it)
+        }
     }
 
     fun getVideoCompleteUrl(text: String): String {
@@ -67,7 +73,11 @@ class MainActivity : AppCompatActivity() {
             return
         }
         runOnUiThread {
+            button.text = "开始解析"
+            button.isEnabled = true
+            tvResult.text = finalVideoUrl
 
+            Log.e("xujj","finalVideoUrl+"+finalVideoUrl)
         }
     }
 
@@ -95,29 +105,20 @@ class MainActivity : AppCompatActivity() {
             e.printStackTrace()
         }
 
+
         return realUrl
     }
 
-
-    private lateinit var qSubscribe: Disposable
-    override fun onResume() {
-        super.onResume()
-        if (qSubscribe != null && !qSubscribe.isDisposed()) {
-            qSubscribe.dispose()
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (!hasFocus) {
+            return
         }
-        // 延迟获取，Android Q 以上问题
-        // 延迟获取，Android Q 以上问题
-        qSubscribe = Flowable.timer(500, TimeUnit.MILLISECONDS)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { aLong: Long? ->
-                val shareText: String = getShareText()
-                if (!TextUtils.isEmpty(shareText) && shareText.contains(" https://v.douyin.com/")) {
-                    editText.setText(shareText)
-                }
-            }
+        val shareText: String = getShareText()
+        if (!TextUtils.isEmpty(shareText) && shareText.contains(" https://v.douyin.com/")) {
+            editText.setText(shareText)
+        }
     }
-
 
     fun getShareText(): String {
         val cm = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
@@ -136,10 +137,36 @@ class MainActivity : AppCompatActivity() {
         return content
     }
 
-    open fun getCompleteUrl(text: String) :String{
-        val p = Pattern.compile("((http|ftp|https)://)(([a-zA-Z0-9._-]+\\.[a-zA-Z]{2,6})|([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}))(:[0-9]{1,4})*(/[a-zA-Z0-9&%_./-~-]*)?", Pattern.CASE_INSENSITIVE)
+    open fun getCompleteUrl(text: String): String {
+        val p = Pattern.compile(
+            "((http|ftp|https)://)(([a-zA-Z0-9._-]+\\.[a-zA-Z]{2,6})|([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}))(:[0-9]{1,4})*(/[a-zA-Z0-9&%_./-~-]*)?",
+            Pattern.CASE_INSENSITIVE
+        )
         val matcher = p.matcher(text)
+        if (matcher.find()) {
+            return matcher.group()
+        }
         return ""
+    }
+
+    fun button(view: View) {
+        val url: String = getCompleteUrl(editText.text.toString())
+        if (TextUtils.isDigitsOnly(url)) {
+            ToastUtils.showLong("未找到抖音分享链接")
+        }
+        button.text = "解析中..."
+        button.isEnabled = false;
+        webView.loadUrl(url);
+    }
+
+    fun onResultClick(view: View) {
+        val myClipboard: ClipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+        var text: String
+        text = tvResult.text.toString()
+
+        val myClip: ClipData = ClipData.newPlainText("text", text)
+        myClipboard.setPrimaryClip(myClip)
+        ToastUtils.showLong("已复制")
     }
 
 }
