@@ -1,5 +1,6 @@
 package com.partner.videotools
 
+import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -7,10 +8,14 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.util.ToastUtils
 import com.partner.videotools.utils.KWebView
+import com.shuyu.gsyvideoplayer.GSYVideoManager
+import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack
+import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -31,9 +36,27 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        webView.setHtmlCallback{
+        webView.setHtmlCallback {
             parseHtml(it)
         }
+
+//        val urlVideo = "http://v29-dy.ixigua.com/8a48e6c2d81fdc27afcfd92cf854ac0e/5f356fbd/video/tos/cn/tos-cn-ve-15/f8b6de113fcd456eb81e66a9ff4b3624/?a=1128&br=4080&bt=1360&cr=0&cs=0&dr=0&ds=3&er=&l=20200813235206010198066215042E7185&lr=aweme&mime_type=video_mp4&qs=0&rc=MzU8ZjR2aXlzcjMzZmkzM0ApODs6OzozaWVnN2g0aGQ8aGc0Ml9jcS5pZmBfLS1iLS9zc2MvMGBfNWJgL14tMmA1NTI6Yw%3D%3D&vl=&vr="
+//        startAutoPlay(this, videoPlayer, urlVideo, "", "DYVIDEO",
+//            object : GSYSampleCallBack() {
+//                override fun onPrepared(url: String?, vararg objects: Any?) {
+//                    super.onPrepared(url, *objects)
+//                    GSYVideoManager.instance().isNeedMute = true
+//                }
+//
+//                override fun onClickResume(url: String?, vararg objects: Any?) {
+//                    super.onClickResume(url, *objects)
+//                }
+//
+//                override fun onClickBlank(url: String?, vararg objects: Any?) {
+//                    super.onClickBlank(url, *objects)
+//                    //TODO 视频详情页
+//                }
+//            })
     }
 
     fun getVideoCompleteUrl(text: String): String {
@@ -54,7 +77,9 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        var theVideo = document.getElementById("theVideo")
+        Log.e("xujj","doc:"+ document.body())
+        var theVideo = document.getElementById("video-player--ORxFE hide--1XNRY")
+        Log.e("xujj","theVideo:"+ theVideo)
         if (theVideo == null) {
             Toast.makeText(this, "视频标签获取失败", Toast.LENGTH_LONG).show()
             return
@@ -77,7 +102,24 @@ class MainActivity : AppCompatActivity() {
             button.isEnabled = true
             tvResult.text = finalVideoUrl
 
-            Log.e("xujj","finalVideoUrl+"+finalVideoUrl)
+            val urlVideo = "http://v29-dy.ixigua.com/8a48e6c2d81fdc27afcfd92cf854ac0e/5f356fbd/video/tos/cn/tos-cn-ve-15/f8b6de113fcd456eb81e66a9ff4b3624/?a=1128&br=4080&bt=1360&cr=0&cs=0&dr=0&ds=3&er=&l=20200813235206010198066215042E7185&lr=aweme&mime_type=video_mp4&qs=0&rc=MzU8ZjR2aXlzcjMzZmkzM0ApODs6OzozaWVnN2g0aGQ8aGc0Ml9jcS5pZmBfLS1iLS9zc2MvMGBfNWJgL14tMmA1NTI6Yw%3D%3D&vl=&vr="
+            startAutoPlay(this, videoPlayer, urlVideo, "", "DYVIDEO",
+                object : GSYSampleCallBack() {
+                    override fun onPrepared(url: String?, vararg objects: Any?) {
+                        super.onPrepared(url, *objects)
+                        GSYVideoManager.instance().isNeedMute = true
+                    }
+
+                    override fun onClickResume(url: String?, vararg objects: Any?) {
+                        super.onClickResume(url, *objects)
+                    }
+
+                    override fun onClickBlank(url: String?, vararg objects: Any?) {
+                        super.onClickBlank(url, *objects)
+                        //TODO 视频详情页
+                    }
+                })
+            Log.e("xujj", "finalVideoUrl+" + finalVideoUrl)
         }
     }
 
@@ -169,4 +211,34 @@ class MainActivity : AppCompatActivity() {
         ToastUtils.showLong("已复制")
     }
 
+
+    fun startAutoPlay(
+        activity: Activity,
+        player: GSYVideoPlayer,
+        playUrl: String,
+        coverUrl: String,
+        playTag: String,
+        callBack: GSYSampleCallBack? = null
+    ) {
+        player.run {
+            //防止错位设置
+            setPlayTag(playTag)
+            //设置播放位置防止错位
+//            setPlayPosition(position)
+            //音频焦点冲突时是否释放
+            setReleaseWhenLossAudio(false)
+            //设置循环播放
+            setLooping(true)
+            //增加封面
+//            val cover = ImageView(activity)
+//            cover.scaleType = ImageView.ScaleType.CENTER_CROP
+//            cover.load(coverUrl, 4f)
+//            cover.parent?.run { removeView(cover) }
+//            setThumbImageView(cover)
+            //设置播放过程中的回调
+            setVideoAllCallBack(callBack)
+            //设置播放URL
+            setUp(playUrl, false, null)
+        }
+    }
 }
