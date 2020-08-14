@@ -78,7 +78,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         Log.e("xujj","doc:"+ document.body())
-        var theVideo = document.getElementById("video-player--ORxFE hide--1XNRY")
+//        var theVideo = document.getElementById("theVideo")
+        var theVideo = document.getElementsByTag("video")
         Log.e("xujj","theVideo:"+ theVideo)
         if (theVideo == null) {
             Toast.makeText(this, "视频标签获取失败", Toast.LENGTH_LONG).show()
