@@ -1,49 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     tools:context=".MainActivity">
-
-
-    <com.partner.videotools.utils.KWebView
-        android:id="@+id/webView"
-        android:layout_width="wrap_content"
-        android:layout_height="1dp"
-        />
-
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="输入抖音分享链接"
-        android:textIsSelectable="true" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="button"
-        android:text="开始解析"
-        />
-
-    <TextView
-        android:id="@+id/tvResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        android:onClick="onResultClick"
-        android:text="解析结果显示区"
-        />
-
-    <com.partner.videotools.view.AutoPlayVideoPlayer
-        android:id="@+id/videoPlayer"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="183dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="15dp"
-       />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-</LinearLayout>
+        <com.partner.videotools.utils.KWebView
+            android:id="@+id/webView"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            />
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="输入抖音分享链接"
+            android:textIsSelectable="true" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="button"
+            android:text="开始解析"
+            />
+
+        <TextView
+            android:id="@+id/tvResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:onClick="onResultClick"
+            android:text="解析结果显示区"
+            />
+
+        <com.partner.videotools.view.AutoPlayVideoPlayer
+            android:id="@+id/videoPlayer"
+            android:layout_width="match_parent"
+            android:layout_height="380dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

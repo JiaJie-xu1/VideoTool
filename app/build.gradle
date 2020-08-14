@@ -23,6 +23,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    //加上jdk1.8设置能解决  Error: Default interface methods are only supported starting with Android N
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 }
 
 dependencies {
@@ -34,6 +41,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
+    implementation 'com.android.support:multidex:1.0.3'
 
     // html解析
     implementation 'org.jsoup:jsoup:1.12.1'

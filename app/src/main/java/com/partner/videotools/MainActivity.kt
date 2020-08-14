@@ -39,24 +39,6 @@ class MainActivity : AppCompatActivity() {
         webView.setHtmlCallback {
             parseHtml(it)
         }
-
-//        val urlVideo = "http://v29-dy.ixigua.com/8a48e6c2d81fdc27afcfd92cf854ac0e/5f356fbd/video/tos/cn/tos-cn-ve-15/f8b6de113fcd456eb81e66a9ff4b3624/?a=1128&br=4080&bt=1360&cr=0&cs=0&dr=0&ds=3&er=&l=20200813235206010198066215042E7185&lr=aweme&mime_type=video_mp4&qs=0&rc=MzU8ZjR2aXlzcjMzZmkzM0ApODs6OzozaWVnN2g0aGQ8aGc0Ml9jcS5pZmBfLS1iLS9zc2MvMGBfNWJgL14tMmA1NTI6Yw%3D%3D&vl=&vr="
-//        startAutoPlay(this, videoPlayer, urlVideo, "", "DYVIDEO",
-//            object : GSYSampleCallBack() {
-//                override fun onPrepared(url: String?, vararg objects: Any?) {
-//                    super.onPrepared(url, *objects)
-//                    GSYVideoManager.instance().isNeedMute = true
-//                }
-//
-//                override fun onClickResume(url: String?, vararg objects: Any?) {
-//                    super.onClickResume(url, *objects)
-//                }
-//
-//                override fun onClickBlank(url: String?, vararg objects: Any?) {
-//                    super.onClickBlank(url, *objects)
-//                    //TODO 视频详情页
-//                }
-//            })
     }
 
     fun getVideoCompleteUrl(text: String): String {
@@ -103,12 +85,11 @@ class MainActivity : AppCompatActivity() {
             button.isEnabled = true
             tvResult.text = finalVideoUrl
 
-            val urlVideo = "http://v29-dy.ixigua.com/8a48e6c2d81fdc27afcfd92cf854ac0e/5f356fbd/video/tos/cn/tos-cn-ve-15/f8b6de113fcd456eb81e66a9ff4b3624/?a=1128&br=4080&bt=1360&cr=0&cs=0&dr=0&ds=3&er=&l=20200813235206010198066215042E7185&lr=aweme&mime_type=video_mp4&qs=0&rc=MzU8ZjR2aXlzcjMzZmkzM0ApODs6OzozaWVnN2g0aGQ8aGc0Ml9jcS5pZmBfLS1iLS9zc2MvMGBfNWJgL14tMmA1NTI6Yw%3D%3D&vl=&vr="
-            startAutoPlay(this, videoPlayer, urlVideo, "", "DYVIDEO",
+            startAutoPlay(this, videoPlayer, finalVideoUrl, "", "DYVIDEO",
                 object : GSYSampleCallBack() {
                     override fun onPrepared(url: String?, vararg objects: Any?) {
                         super.onPrepared(url, *objects)
-                        GSYVideoManager.instance().isNeedMute = true
+                        GSYVideoManager.instance().isNeedMute = false
                     }
 
                     override fun onClickResume(url: String?, vararg objects: Any?) {
