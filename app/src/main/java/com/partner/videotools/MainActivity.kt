@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -12,6 +13,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.util.ToastUtils
+import com.partner.videotools.activity.VideoPlayActivity
 import com.partner.videotools.utils.KWebView
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack
@@ -99,6 +101,10 @@ class MainActivity : AppCompatActivity() {
                     override fun onClickBlank(url: String?, vararg objects: Any?) {
                         super.onClickBlank(url, *objects)
                         //TODO 视频详情页
+                        val intent = Intent(this@MainActivity,VideoPlayActivity::class.java)
+                        intent.putExtra("video_url",finalVideoUrl)
+                        intent.putExtra("video_title","抖音短视频")
+                        startActivity(intent)
                     }
                 })
             Log.e("xujj", "finalVideoUrl+" + finalVideoUrl)

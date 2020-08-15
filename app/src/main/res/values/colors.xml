@@ -6,7 +6,13 @@
 
     <color name="black">#000000</color>
     <color name="blue">#4687d7</color>
+    <color name="white">#fff</color>
+    <color name="text_gray">#555555</color>
+    <color name="dark_text">#4f4d4d</color>
+    <color name="tblue">#884687d7</color>
     <color name="gray">#ededed</color>
+    <color name="bg_gray">#f5f5f5</color>
     <color name="grayDark">#adadad</color>
     <color name="loading">#cdcdcd</color>
+    <color name="transparent">#00ffffff</color>
 </resources>
