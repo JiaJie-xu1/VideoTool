@@ -22,6 +22,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".activity.DyVideoActivity"/>
         <activity android:name=".activity.VideoPlayActivity"/>
 
     </application>

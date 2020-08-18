@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">VideoTools</string>
+    <string name="dy_teach_title">教程</string>
+    <string name="dy_teach_tips">1、打开其他软件，找到要去水印的视频，找到【分享】按钮；
+        \n2、点开分享按钮，找到【复制链接】复制视频链接；\n3、复制成功后打开本软件粘贴到输入框内；\n4、点击开始解析按钮，等待视频生成，点击视频进入详情页可进行下载</string>
 </resources>
