@@ -55,4 +55,5 @@ dependencies {
     implementation 'com.blankj:utilcode:1.26.0'
     //请求权限库
     implementation 'com.permissionx.guolindev:permissionx:1.2.2'
+    implementation "androidx.cardview:cardview:1.0.0"
 }

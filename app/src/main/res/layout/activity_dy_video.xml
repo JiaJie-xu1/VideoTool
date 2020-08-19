@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:context=".MainActivity">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp"
@@ -20,6 +20,7 @@
 
         <EditText
             android:id="@+id/editText"
+            android:layout_below="@id/webView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -30,6 +31,7 @@
 
         <Button
             android:id="@+id/button"
+            android:layout_below="@id/editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/black_btn_bg"
@@ -44,6 +46,7 @@
 
         <RelativeLayout
             android:id="@+id/rlVideoUrl"
+            android:layout_below="@id/button"
             android:background="@drawable/white_btn_bg"
             android:layout_margin ="10dp"
             android:padding="15dp"
@@ -71,6 +74,7 @@
 
         <LinearLayout
             android:id="@+id/llTeach"
+            android:layout_below="@id/rlVideoUrl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="20dp"
@@ -96,10 +100,22 @@
         <com.partner.videotools.view.AutoPlayVideoPlayer
             android:id="@+id/videoPlayer"
             android:visibility="gone"
+            android:layout_below="@id/llTeach"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_margin="10dp"
             />
 
-    </LinearLayout>
+        <TextView
+            android:layout_below="@id/videoPlayer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_centerHorizontal="true"
+            android:textSize="15sp"
+            android:textColor="@color/dark_text"
+            android:textStyle="bold"
+            android:text="@string/dy_tips"/>
+    </RelativeLayout>
 </androidx.core.widget.NestedScrollView>
