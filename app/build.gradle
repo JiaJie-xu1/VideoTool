@@ -16,6 +16,11 @@ android {
         versionName "1.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            //目前已支持 "armeabi-v7a","arm64-v8a","x86","x86_64" 平台架构
+            abiFilters "armeabi-v7a","arm64-v8a","x86","x86_64"
+        }
     }
     buildTypes {
         release {
@@ -56,4 +61,6 @@ dependencies {
     //请求权限库
     implementation 'com.permissionx.guolindev:permissionx:1.2.2'
     implementation "androidx.cardview:cardview:1.0.0"
+    //强大的音视频处理库
+    implementation 'com.github.microshow:RxFFmpeg:4.7.0-lite'
 }
