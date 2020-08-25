@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.layout_auto_play_video_player.view.*
  * Created by Jay.Xu
  * @since 2020/8/13
  */
-class AutoPlayVideoPlayer : StandardGSYVideoPlayer{
+class AutoPlayVideoPlayer : StandardGSYVideoPlayer {
 
     constructor(context: Context) : super(context)
 
