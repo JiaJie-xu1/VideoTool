@@ -15,4 +15,6 @@
     <color name="grayDark">#adadad</color>
     <color name="loading">#cdcdcd</color>
     <color name="transparent">#00ffffff</color>
+
+    <color name="c_61B50C">#61B50C</color>
 </resources>

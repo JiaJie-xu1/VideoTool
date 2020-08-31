@@ -13,6 +13,7 @@ import com.blankj.utilcode.util.FileUtils
 import com.blankj.utilcode.util.TimeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.partner.videotools.activity.DyVideoActivity
+import com.partner.videotools.activity.GetAudioFromVideoActivity
 import com.partner.videotools.constants.ALBUM_PATH
 import com.partner.videotools.constants.LOCAL_PATH
 import com.permissionx.guolindev.PermissionX
@@ -167,7 +168,13 @@ class MainActivity : AppCompatActivity() {
 
                         Log.e("xujj", "videoPath:$videoPath")
 
-                        extractAudio(videoPath, "$LOCAL_PATH${TimeUtils.date2Millis(Date())}.aac")
+                        val intent = Intent(this, GetAudioFromVideoActivity::class.java)
+                        intent.putExtra("video_Path",videoPath);
+                        intent.putExtra("video_title","提取音乐");
+                        ActivityUtils.startActivity(intent)
+
+//                        extractAudio(videoPath, "$LOCAL_PATH${TimeUtils.date2Millis(Date())}.aac")
+
                     }
                 }
             }

@@ -63,4 +63,7 @@ dependencies {
     implementation "androidx.cardview:cardview:1.0.0"
     //强大的音视频处理库
     implementation 'com.github.microshow:RxFFmpeg:4.7.0-lite'
+
+    //进度条框架
+    implementation 'com.white:progressview:1.0.1'
 }
