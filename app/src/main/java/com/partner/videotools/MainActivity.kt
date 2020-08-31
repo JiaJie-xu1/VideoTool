@@ -129,8 +129,26 @@ class MainActivity : AppCompatActivity() {
         runFFmpegRxJava(commandsArray)
     }
 
+    /**
+     * 截取视频片段时间：startTime 开始时间
+     * duration:视频时间
+     * path：视频原始地址
+     * outPath:视频输出时间
+     */
+    private fun extractVideo(startTime: String, duration: String, path: String, outPath: String) {
+        var mixVideoCmd = "ffmpeg -i ".plus(path).plus(" -ss ").plus(startTime).plus(" -t ")
+            .plus("$duration ").plus(LOCAL_PATH).plus(outPath)
+
+        var commandsArray = mixVideoCmd.split(" ".toRegex()) //以空格分割为字符串数组
+
+        Log.e("xujj", "mixVideoCmd:$mixVideoCmd")
+
+        Log.e("xujj", "commandsArray:$commandsArray")
+
+        runFFmpegRxJava(commandsArray)
+    }
+
     private fun runFFmpegRxJava(commandsArray: List<String>) {
-        Log.e("xujj", "commandsArray:${commandsArray.toTypedArray()}")
         RxFFmpegInvoke.getInstance().runCommandRxJava(commandsArray.toTypedArray())
             .subscribe(object : RxFFmpegSubscriber() {
                 override fun onFinish() {
@@ -169,8 +187,8 @@ class MainActivity : AppCompatActivity() {
                         Log.e("xujj", "videoPath:$videoPath")
 
                         val intent = Intent(this, GetAudioFromVideoActivity::class.java)
-                        intent.putExtra("video_Path",videoPath);
-                        intent.putExtra("video_title","提取音乐");
+                        intent.putExtra("video_Path", videoPath);
+                        intent.putExtra("video_title", "提取音乐");
                         ActivityUtils.startActivity(intent)
 
 //                        extractAudio(videoPath, "$LOCAL_PATH${TimeUtils.date2Millis(Date())}.aac")
@@ -191,7 +209,12 @@ class MainActivity : AppCompatActivity() {
 
                         Log.e("xujj", "videoPath:$videoPath")
 
-                        extractAudio("5", "20", videoPath, "测试", ".mp3")
+                        extractVideo(
+                            "5",
+                            "20",
+                            videoPath,
+                            "${TimeUtils.date2Millis(Date())}.mp4"
+                        )
                     }
                 }
             }
