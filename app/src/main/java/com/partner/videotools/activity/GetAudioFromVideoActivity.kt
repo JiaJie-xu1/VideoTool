@@ -26,10 +26,10 @@ import kotlinx.android.synthetic.main.activity_video_play.videoPlayer
 import java.util.*
 
 class GetAudioFromVideoActivity : AppCompatActivity() {
-    var videoPath: String = ""
-    var videoTitle: String = ""
+    private var videoPath: String = ""
+    private var videoTitle: String = ""
 
-    var cSubscribe: Disposable? = null
+    private var cSubscribe: Disposable? = null
     lateinit var orientationUtils: OrientationUtils
     var outPutPath: String = ""
 

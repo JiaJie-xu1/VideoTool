@@ -25,6 +25,7 @@
         <activity android:name=".activity.DyVideoActivity"/>
         <activity android:name=".activity.VideoPlayActivity"/>
         <activity android:name=".activity.GetAudioFromVideoActivity"/>
+        <activity android:name=".activity.CutVideoActivity"/>
 
     </application>
 

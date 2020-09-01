@@ -12,6 +12,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.FileUtils
 import com.blankj.utilcode.util.TimeUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.partner.videotools.activity.CutVideoActivity
 import com.partner.videotools.activity.DyVideoActivity
 import com.partner.videotools.activity.GetAudioFromVideoActivity
 import com.partner.videotools.constants.ALBUM_PATH
@@ -80,97 +81,6 @@ class MainActivity : AppCompatActivity() {
         FileUtils.createOrExistsDir(LOCAL_PATH)
     }
 
-    /**
-     * 提取视频中音频的片段
-     */
-
-    fun extractAudio(startTime: String, time: String, path: String, name: String, deType: String) {
-        var type = ".mp3"
-        if (deType != "") {
-            type = deType
-        }
-        audioName = name
-        fileName = "${TimeUtils.date2Millis(Date())}audio$type"
-
-        if (startTime == "") {
-            commands = "ffmpeg -i ".plus(path).plus(" -vn ")
-                .plus(LOCAL_PATH)
-                .plus(fileName)
-        } else {
-            commands =
-                "ffmpeg -i ".plus(path).plus(" -vn ").plus("-ss ").plus(startTime).plus(" -t ")
-                    .plus(time + " ").plus(LOCAL_PATH).plus(fileName)
-        }
-        Log.e("xujj", "commands:$commands")
-        var commandsArray = commands.split(" ")
-
-        Log.e("xujj", "commandsArray:$commandsArray")
-
-        runFFmpegRxJava(commandsArray)
-    }
-
-    /**
-     * 使用ffmpeg命令行进行抽取音频
-     * @param srcFile 原文件
-     * @param targetFile 目标文件
-     * @return 抽取后的音频文件
-     */
-    fun extractAudio(
-        srcFile: String?,
-        targetFile: String?
-    ) {
-        //-vn:video not
-        var mixAudioCmd = "ffmpeg -i %s -acodec copy -vn %s"
-        mixAudioCmd = String.format(mixAudioCmd, srcFile, targetFile)
-        var commandsArray = mixAudioCmd.split(" ".toRegex()) //以空格分割为字符串数组
-
-        Log.e("xujj", "commandsArray:$commandsArray")
-
-        runFFmpegRxJava(commandsArray)
-    }
-
-    /**
-     * 截取视频片段时间：startTime 开始时间
-     * duration:视频时间
-     * path：视频原始地址
-     * outPath:视频输出时间
-     */
-    private fun extractVideo(startTime: String, duration: String, path: String, outPath: String) {
-        var mixVideoCmd = "ffmpeg -i ".plus(path).plus(" -ss ").plus(startTime).plus(" -t ")
-            .plus("$duration ").plus(LOCAL_PATH).plus(outPath)
-
-        var commandsArray = mixVideoCmd.split(" ".toRegex()) //以空格分割为字符串数组
-
-        Log.e("xujj", "mixVideoCmd:$mixVideoCmd")
-
-        Log.e("xujj", "commandsArray:$commandsArray")
-
-        runFFmpegRxJava(commandsArray)
-    }
-
-    private fun runFFmpegRxJava(commandsArray: List<String>) {
-        RxFFmpegInvoke.getInstance().runCommandRxJava(commandsArray.toTypedArray())
-            .subscribe(object : RxFFmpegSubscriber() {
-                override fun onFinish() {
-                    Log.e("xujj", "onFinish()")
-                    ToastUtils.showShort("提取成功")
-                }
-
-                override fun onCancel() {
-                    Log.e("xujj", "onCancel()")
-                }
-
-                override fun onProgress(progress: Int, progressTime: Long) {
-                    Log.e("xujj", "progress():$progress")
-                    //Logger.d("onCancel")
-                }
-
-                override fun onError(message: String?) {
-                    ToastUtils.showShort("提取失败：$message")
-                }
-            })
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         Log.e("xujj", "result code:$requestCode")
         if (requestCode == REQUEST_VIDEO_GET_AUDIO_CODE) {
@@ -196,7 +106,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-        } else if (requestCode == REQUEST_CUT_VIDEO_AUDIO_CODE) {//截取视频中的音频片段
+        } else if (requestCode == REQUEST_CUT_VIDEO_AUDIO_CODE) {//截取视频中的片段
             if (resultCode == Activity.RESULT_OK) {
                 val uri = data?.data
                 val cr = this.contentResolver
@@ -209,12 +119,9 @@ class MainActivity : AppCompatActivity() {
 
                         Log.e("xujj", "videoPath:$videoPath")
 
-                        extractVideo(
-                            "5",
-                            "20",
-                            videoPath,
-                            "${TimeUtils.date2Millis(Date())}.mp4"
-                        )
+                        val intent = Intent(this, CutVideoActivity::class.java)
+                        intent.putExtra("video_Path", videoPath);
+                        ActivityUtils.startActivity(intent)
                     }
                 }
             }
