@@ -66,8 +66,10 @@ class VideoToGiFActivity : AppCompatActivity() {
     private fun extractVideo(fps: Int, scale: Int, path: String, outPath: String) {
         var mixVideoCmd = "ffmpeg -i "
             .plus(path)
-            .plus(" -vf ")
-            .plus("fps=$fps")
+            .plus(" -b 568k")
+            .plus(" -r 10")
+            .plus(" -vf")
+            .plus(" fps=$fps,scale=320:-1")
             .plus(" -y ")
             .plus(LOCAL_PATH)
             .plus(outPath)
