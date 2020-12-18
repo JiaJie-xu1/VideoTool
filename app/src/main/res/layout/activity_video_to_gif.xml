@@ -23,40 +23,13 @@
             android:layout_width="match_parent"
             android:orientation="horizontal"
             android:padding="15dp">
-
-            <EditText
-                android:background="@drawable/white_btn_bg"
-                android:gravity="center"
-                android:hint="视频开始时间"
-                android:id="@+id/etStart"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:padding="15dp"
-                android:textIsSelectable="true"
-                android:textSize="13sp" />
-
-            <EditText
-                android:background="@drawable/white_btn_bg"
-                android:gravity="center"
-                android:hint="裁剪总时长"
-                android:id="@+id/etDuration"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:padding="15dp"
-                android:textIsSelectable="true"
-                android:textSize="13sp" />
-
             <Button
                 android:background="@drawable/normal_btn_bg"
                 android:id="@+id/btnStart"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:text="生成"
                 android:textColor="@color/grayDark" />
         </LinearLayout>

@@ -47,31 +47,48 @@
         </LinearLayout>
 
 
-            <LinearLayout
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/tvMusic"
-                    android:text="提取音乐"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:background="@drawable/blue2_btn_bg"
-                    android:textColor="@color/white"
-                    android:layout_marginRight="20dp"
-                    android:layout_height="100dp"/>
-                <TextView
-                    android:id="@+id/tvCut"
-                    android:text="截取视频"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:background="@drawable/blue2_btn_bg"
-                    android:textColor="@color/white"
-                    android:layout_width="0dp"
-                    android:layout_height="100dp"/>
-            </LinearLayout>
+        <LinearLayout
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvMusic"
+                android:text="提取音乐"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:background="@drawable/blue2_btn_bg"
+                android:textColor="@color/white"
+                android:layout_marginRight="20dp"
+                android:layout_height="100dp"/>
+            <TextView
+                android:id="@+id/tvCut"
+                android:text="截取视频"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/blue2_btn_bg"
+                android:textColor="@color/white"
+                android:layout_width="0dp"
+                android:layout_height="100dp"/>
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvGif"
+                android:text="视频转GIF"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:background="@drawable/blue2_btn_bg"
+                android:textColor="@color/white"
+                android:layout_marginRight="20dp"
+                android:layout_height="100dp"/>
+        </LinearLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

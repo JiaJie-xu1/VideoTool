@@ -16,17 +16,13 @@ import com.shuyu.gsyvideoplayer.utils.GSYVideoType
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils
 import io.microshow.rxffmpeg.RxFFmpegInvoke
 import io.microshow.rxffmpeg.RxFFmpegSubscriber
-import kotlinx.android.synthetic.main.activity_cut_video.*
-import kotlinx.android.synthetic.main.activity_cut_video.progress100
-import kotlinx.android.synthetic.main.activity_get_audio_from_video.*
-import kotlinx.android.synthetic.main.activity_get_audio_from_video.videoPlayer
-import kotlinx.android.synthetic.main.activity_video_play.*
+import kotlinx.android.synthetic.main.activity_video_to_gif.*
 import java.util.*
 
 /**
- * 截取视频
+ * 视频转GIF
  */
-class CutVideoActivity : AppCompatActivity() {
+class VideoToGiFActivity : AppCompatActivity() {
     private var videoPath = ""
     private var startTime = ""
     private var duration = ""
@@ -36,27 +32,13 @@ class CutVideoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_cut_video)
+        setContentView(R.layout.activity_video_to_gif)
 
         videoPath = intent.getStringExtra("video_Path")
 
         btnStart.setOnClickListener {
-            startTime = etStart.text.toString()
-            duration = etDuration.text.toString()
-
-            etStart.clearFocus()
-            etDuration.clearFocus()
-            if (!TextUtils.isEmpty(startTime) && !TextUtils.isEmpty(duration)) {
-                outPutPath = "${TimeUtils.date2Millis(Date())}.mp4"
-                extractVideo(
-                    startTime,
-                    duration,
-                    videoPath,
-                    outPutPath
-                )
-            } else {
-                ToastUtils.showLong("请输入视频开始时间和时长")
-            }
+            outPutPath = "${TimeUtils.date2Millis(Date())}.gif"
+            extractVideo(10, 320, videoPath, outPutPath)
         }
 
         initPalyer()
@@ -81,9 +63,14 @@ class CutVideoActivity : AppCompatActivity() {
      * path：视频原始地址
      * outPath:视频输出时间
      */
-    private fun extractVideo(startTime: String, duration: String, path: String, outPath: String) {
-        var mixVideoCmd = "ffmpeg -i ".plus(path).plus(" -ss ").plus(startTime).plus(" -t ")
-            .plus("$duration ").plus(LOCAL_PATH).plus(outPath)
+    private fun extractVideo(fps: Int, scale: Int, path: String, outPath: String) {
+        var mixVideoCmd = "ffmpeg -i "
+            .plus(path)
+            .plus(" -vf ")
+            .plus("fps=$fps")
+            .plus(" -y ")
+            .plus(LOCAL_PATH)
+            .plus(outPath)
 
         var commandsArray = mixVideoCmd.split(" ".toRegex()) //以空格分割为字符串数组
 
@@ -96,8 +83,7 @@ class CutVideoActivity : AppCompatActivity() {
 
     private fun runFFmpegRxJava(commandsArray: List<String>) {
         progress100.visibility = View.VISIBLE
-        Log.e("xujj", "commandsArray:${commandsArray.toTypedArray()}")
-        ToastUtils.showShort("正在提取中")
+        ToastUtils.showShort("正在转化中")
         btnStart.isClickable = false
         RxFFmpegInvoke.getInstance().runCommandRxJava(commandsArray.toTypedArray())
             .subscribe(object : RxFFmpegSubscriber() {
@@ -105,7 +91,7 @@ class CutVideoActivity : AppCompatActivity() {
                     Log.e("xujj", "onFinish()")
                     btnStart.isClickable = true
                     progress100.visibility = View.GONE
-                    ToastUtils.showLong("提取成功,路径为:$LOCAL_PATH$outPutPath")
+                    ToastUtils.showLong("转化成功,路径为:$LOCAL_PATH$outPutPath")
                 }
 
                 override fun onCancel() {
@@ -123,7 +109,7 @@ class CutVideoActivity : AppCompatActivity() {
                 override fun onError(message: String?) {
                     progress100.visibility = View.GONE
                     btnStart.isClickable = true
-                    ToastUtils.showShort("提取失败：$message")
+                    ToastUtils.showShort("转化失败：$message")
                 }
             })
     }

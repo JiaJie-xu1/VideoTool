@@ -67,20 +67,20 @@ class DyVideoActivity : AppCompatActivity() {
         var theVideo = document.getElementsByTag("video")
         Log.e("xujj","theVideo:"+ theVideo)
         if (theVideo == null) {
-            Toast.makeText(this, "视频标签获取失败", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "获取失败，继续尝试解析", Toast.LENGTH_LONG).show()
             return
         }
 
         var videoUrl = theVideo.attr("src")
         if (TextUtils.isEmpty(videoUrl)) {
-            Toast.makeText(this, "视频标签获取失败", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "获取失败，继续尝试解析", Toast.LENGTH_LONG).show()
             return
         }
         videoUrl = videoUrl.replace("playwm", "play")
         //获取重定向的URL
         var finalVideoUrl = getRealUrl(videoUrl)
         if (TextUtils.isEmpty(finalVideoUrl)) {
-            Toast.makeText(this, "获取重定向地址失败", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "解析失败", Toast.LENGTH_LONG).show()
             return
         }
         runOnUiThread {

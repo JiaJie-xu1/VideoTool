@@ -15,6 +15,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.partner.videotools.activity.CutVideoActivity
 import com.partner.videotools.activity.DyVideoActivity
 import com.partner.videotools.activity.GetAudioFromVideoActivity
+import com.partner.videotools.activity.VideoToGiFActivity
 import com.partner.videotools.constants.ALBUM_PATH
 import com.partner.videotools.constants.LOCAL_PATH
 import com.permissionx.guolindev.PermissionX
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
 
     private val REQUEST_VIDEO_GET_AUDIO_CODE = 10001
     private val REQUEST_CUT_VIDEO_AUDIO_CODE = 10002
+    private val REQUEST_VIDEO_TO_GIF = 10003
 
     private var audioName: String = ""
     private var fileName: String = ""
@@ -75,6 +77,11 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI)
             startActivityForResult(intent, REQUEST_CUT_VIDEO_AUDIO_CODE)
         }
+
+        tvGif.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI)
+            startActivityForResult(intent, REQUEST_VIDEO_TO_GIF)
+        }
     }
 
     fun initLocalFiles() {
@@ -120,6 +127,25 @@ class MainActivity : AppCompatActivity() {
                         Log.e("xujj", "videoPath:$videoPath")
 
                         val intent = Intent(this, CutVideoActivity::class.java)
+                        intent.putExtra("video_Path", videoPath);
+                        ActivityUtils.startActivity(intent)
+                    }
+                }
+            }
+        }else if (requestCode == REQUEST_VIDEO_TO_GIF) {//截取视频中的片段
+            if (resultCode == Activity.RESULT_OK) {
+                val uri = data?.data
+                val cr = this.contentResolver
+
+                val cursor = cr.query(uri!!, null, null, null, null)
+                if (cursor != null) {
+                    if (cursor.moveToFirst()) {
+                        val videoPath =
+                            cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA))
+
+                        Log.e("xujj", "videoPath:$videoPath")
+
+                        val intent = Intent(this, VideoToGiFActivity::class.java)
                         intent.putExtra("video_Path", videoPath);
                         ActivityUtils.startActivity(intent)
                     }
